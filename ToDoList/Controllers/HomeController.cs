@@ -12,7 +12,12 @@ namespace ToDoList.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            return View();
+            return PartialView();
+        }
+
+        public ActionResult ItemList()
+        {
+            return PartialView();
         }
     }
 }
