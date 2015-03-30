@@ -8,10 +8,11 @@
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/todo")        
     </head>
-    <body>
+    <body ng-app="toDoApp">
         <div class="container-fluid">
             <h1>Hello~ Web API 2 + Angularjs</h1>
-        </div>    
+            <div ng-view></div>
+        </div>
     </body>
 </html>
 

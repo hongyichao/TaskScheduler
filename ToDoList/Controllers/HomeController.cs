@@ -19,5 +19,11 @@ namespace ToDoList.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult Projects()
+        {
+            return PartialView();
+        }
+
     }
 }

@@ -30,7 +30,8 @@ namespace ToDoList
                       "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/todo").Include(
-                "~/ToDoScript/*.js"
+                "~/ToDoScript/*.js",
+                "~/ToDoScript/controllers/*.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
