@@ -10,9 +10,21 @@
     </head>
     <body ng-app="toDoApp">
         <div class="container-fluid">
-            <h1>Hello~ Web API 2 + Angularjs</h1>
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div>                    
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="col-md-3"></li>
+                            <li class="col-md-3"><a href="#/">Items</a></li>
+                            <li class="col-md-3"><a href="#/projects">Projects</a></li>
+                            <li class="col-md-3">@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br/>                   
             <div ng-view></div>
-        </div>
+        </div>    
     </body>
 </html>
 

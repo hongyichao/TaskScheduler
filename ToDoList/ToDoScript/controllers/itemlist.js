@@ -1,6 +1,6 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
-itemList.controller('itemListCtrl', ['$scope', function ($scope) {
+itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, itemReq) {
     
     $scope.selectedItems = [{}];
     $scope.myData = [
@@ -22,5 +22,18 @@ itemList.controller('itemListCtrl', ['$scope', function ($scope) {
         filterOptions: $scope.filterOptions,
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
+
+    $scope.populateGridData = function()
+    {
+        itemReq.get({},function (itemData) {
+            
+            $scope.myData = itemData;
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        });
+    }
+
+    $scope.populateGridData();
 
 }]);
