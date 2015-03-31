@@ -4,7 +4,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
     
     $scope.selectedItems = [{}];
     $scope.myData = [
-        { "projectName": "My Angular Project 1", taskDesc: "to do 1", hours: "3", start: "2014-11-12", end: "2015-01-15" }
+        //{ "projectName": "My Angular Project 1", taskDesc: "to do 1", hours: "3", start: "2014-11-12", end: "2015-01-15" }
     ];
     $scope.totalItems = $scope.myData.length;
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 20, currentPage: 1 };
@@ -25,7 +25,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
 
     $scope.populateGridData = function()
     {
-        itemReq.get({},function (itemData) {
+        itemReq.getItems({}, function (itemData) {
             
             $scope.myData = itemData;
             if (!$scope.$$phase) {

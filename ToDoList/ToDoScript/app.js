@@ -8,16 +8,16 @@ app.config(["$routeProvider", function ($routeProvider) {
         templateUrl: '/Home/ItemList',
         controller: 'itemListCtrl'
     }).when('/projects', {
-        templateUrl:'/Home/Projects'
-    })
+        templateUrl: '/Home/Projects'
+    });
 }]);
 
 
 app.factory("itemReq", ["$resource", function ($resource) {
     return $resource("api/items/:id", null, {
-        'getItems': { method: 'GET' },
+        'getItems': { method: 'GET', isArray:true },
         'addItem': { method: 'POST' },
         'updateItem': { method: 'PUT' },
         'deleteItem': { method: 'DELETE' }
-    })
+    });
 }]);
