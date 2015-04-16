@@ -20,6 +20,15 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
         totalServerItems: 'totalItems',
         pagingOptions: $scope.pagingOptions,
         filterOptions: $scope.filterOptions,
+        columnDefs: [
+            { displayName: 'Project Name', field: 'ProjectName' },
+            { displayName: 'Task Name', field: 'TaskName' },
+            { displayName: 'Assign To', field: 'By' },
+            { displayName: 'Start Time', field: 'StartTime', cellFilter: "date:'yyyy-MM-dd'" },
+            { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'" },
+            { displayName: 'Total Hours', field: 'TotalHours' },
+            { displayName: 'Hours Per Day', field: 'HoursPerDay' }
+        ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
 
