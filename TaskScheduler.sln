@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskScheduler", "ToDoList\TaskScheduler.csproj", "{AE8C035B-7BF3-4C44-B727-A6456C50FAAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskScheduler", "TaskScheduler\TaskScheduler.csproj", "{AE8C035B-7BF3-4C44-B727-A6456C50FAAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskScheduler.Tests", "ToDoList.Tests\TaskScheduler.Tests.csproj", "{56DBAFAA-7344-46A8-A010-BBE2D1B91ED6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskScheduler.Tests", "TaskScheduler.Tests\TaskScheduler.Tests.csproj", "{56DBAFAA-7344-46A8-A010-BBE2D1B91ED6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D1ECECCC-2641-4A35-881B-E8087B7F02E1}"
 	ProjectSection(SolutionItems) = preProject

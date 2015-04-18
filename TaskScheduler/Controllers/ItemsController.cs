@@ -22,8 +22,8 @@ namespace ToDoList.Controllers
             return db.Items;
         }
 
-        public IQueryable<Item> GetItems(int pageSize, int page) { 
-            
+        public IQueryable<Item> GetItems(int pageSize, int page) {
+            return db.Items;
         }
 
         [Route("api/searchItems")]

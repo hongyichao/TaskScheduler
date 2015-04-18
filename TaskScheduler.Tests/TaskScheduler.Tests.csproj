@@ -108,7 +108,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoList\TaskScheduler.csproj">
+    <ProjectReference Include="..\TaskScheduler\TaskScheduler.csproj">
       <Project>{AE8C035B-7BF3-4C44-B727-A6456C50FAAA}</Project>
       <Name>TaskScheduler</Name>
     </ProjectReference>
