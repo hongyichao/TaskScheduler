@@ -108,9 +108,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ToDoList\ToDoList.csproj">
+    <ProjectReference Include="..\ToDoList\TaskScheduler.csproj">
       <Project>{AE8C035B-7BF3-4C44-B727-A6456C50FAAA}</Project>
-      <Name>ToDoList</Name>
+      <Name>TaskScheduler</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
