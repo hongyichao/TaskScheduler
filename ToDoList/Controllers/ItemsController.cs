@@ -21,6 +21,11 @@ namespace ToDoList.Controllers
         {
             return db.Items;
         }
+
+        public IQueryable<Item> GetItems(int pageSize, int page) { 
+            
+        }
+
         [Route("api/searchItems")]
         [HttpGet]
         public IQueryable<Item> SearchItems([FromUri]Item searchItem)
@@ -29,7 +34,7 @@ namespace ToDoList.Controllers
                 && (i.By == searchItem.By || string.IsNullOrEmpty(searchItem.By))
                 );
         }
-
+        
         // GET: api/Items/5
         [ResponseType(typeof(Item))]
         public IHttpActionResult GetItem(int id)
