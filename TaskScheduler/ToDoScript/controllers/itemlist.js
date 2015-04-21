@@ -7,7 +7,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
         //{ "projectName": "My Angular Project 1", taskDesc: "to do 1", hours: "3", start: "2014-11-12", end: "2015-01-15" }
     ];
     $scope.totalItems = $scope.myData.length;
-    $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 20, currentPage: 1 };
+    $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
 
     $scope.itemGridOptions = {
@@ -40,6 +40,8 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
+
+            $scope.totalItems = $scope.myData.length;
         });
     }
 
