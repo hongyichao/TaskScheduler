@@ -34,14 +34,15 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
 
     $scope.populateGridData = function()
     {
-        itemReq.getItems({}, function (itemData) {
+        itemReq.getItems({ pageSize: 10, page: 1 }, function (itemData) {
             
-            $scope.myData = itemData;
+            $scope.myData = itemData.items;
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
 
-            $scope.totalItems = $scope.myData.length;
+            $scope.totalItems = itemData.totalItems;
+            
         });
     }
 

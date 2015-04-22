@@ -14,8 +14,9 @@ app.config(["$routeProvider", function ($routeProvider) {
 
 
 app.factory("itemReq", ["$resource", function ($resource) {
-    return $resource("api/items/:id", null, {
-        'getItems': { method: 'GET', isArray:true },
+    return $resource("api/items/:id/:pageSize/:page", null, {
+        'getAllItems': { method: 'GET', isArray: true },
+        'getItems':{methos:'GET'},
         'addItem': { method: 'POST' },
         'updateItem': { method: 'PUT' },
         'deleteItem': { method: 'DELETE' }

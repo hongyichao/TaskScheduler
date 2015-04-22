@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ToDoList.Models;
+using ToDoList.ViewModels;
 
 namespace ToDoList.Controllers
 {
@@ -22,10 +23,15 @@ namespace ToDoList.Controllers
             return db.Items;
         }
 
-        [Route("api/pageSize/Page")]
-        public IQueryable<Item> GetItems(int pageSize, int page) {
-            
-            return db.Items;
+        [Route("api/items/{pageSize}/{Page}")]
+        public ItemViewModel GetItems(int pageSize, int page) {
+
+            var selectedItems= db.Items
+                .OrderBy(i => i.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize).ToList();
+
+            return new ItemViewModel() { totalItems=db.Items.Count(), items = selectedItems  };
         }
 
         [Route("api/searchItems")]
