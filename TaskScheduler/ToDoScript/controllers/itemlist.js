@@ -76,7 +76,9 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
 
         if (action === "add") {
             itemModalInstance.result.then(function (anItem) {
-                itemReq.addItem(anItem).$promise.then( $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage));
+                itemReq.addItem(anItem).$promise.then(function () {                    
+                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage)
+                });
                 $log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
             });
         }
@@ -125,6 +127,10 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
             TotalHours: $scope.totalHours,
             HoursPerDay: $scope.hoursPerDay
         });
+    }
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancelled');
     }
 
 }]);
