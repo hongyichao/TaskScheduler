@@ -1099,6 +1099,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\ItemList.cshtml" />
     <Content Include="Views\Home\Projects.cshtml" />
+    <Content Include="Views\Home\ItemModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

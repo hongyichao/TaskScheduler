@@ -25,5 +25,10 @@ namespace ToDoList.Controllers
             return PartialView();
         }
 
+        public ActionResult ItemModal()
+        {
+            return PartialView();
+        }
+
     }
 }

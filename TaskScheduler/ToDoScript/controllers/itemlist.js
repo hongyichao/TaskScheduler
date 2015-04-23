@@ -1,15 +1,14 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
-itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, itemReq) {
+itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', function ($scope, itemReq, $modal, $log) {
     
     $scope.selectedItems = [{}];
     $scope.myData = [
-        //{ "projectName": "My Angular Project 1", taskDesc: "to do 1", hours: "3", start: "2014-11-12", end: "2015-01-15" }
     ];
     $scope.totalItems = $scope.myData.length;
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
-
+    
     $scope.itemGridOptions = {
         data: 'myData',
         selectedItems : $scope.selectedItems,
@@ -56,5 +55,76 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
         }
     });
 
+    $scope.showItemModal = function (action, row) {
+        var itemModalInstance = $modal.open({
+            templateUrl: "/Home/ItemModal",
+            controller: "itemModalCtrl",
+            resolve: {
+                reqObj: function () {
+                    if(action==="add") {
+                        return {action:"add",itemInstance:{}}
+                    } else {
+                        $scope.selectedItem = {};
+                        if ($scope.itemGridOptions.selectedItems[0]==="undefined") {
+                            $scope.selectedItems = $scope.itemGridOptions.selectedItems[0];
+                        }
+                        return { action: "update", itemInstance: $scope.selectedItem }
+                    }
+                }
+            }
+        });
+
+        if (action === "add") {
+            itemModalInstance.result.then(function (anItem) {
+                itemReq.addItem(anItem).$promise.then( $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage));
+                $log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
+            });
+        }
+        
+        if(action==="update") {
+            
+        }
+
+        if(action==="delete") {
+            
+        }
+    }
+}]);
+
+itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', function ($scope, $modalInstance, reqObj) {
+
+    $scope.projectName = "";
+    $scope.taskName = "";
+    $scope.assignee = "";
+    $scope.startTime = "";
+    $scope.endTime = "";
+    $scope.totalHours = "";
+    $scope.hoursPerDay = "";
+
+    if (reqObj.action === "add") {
+        //alert('add');
+    }
+
+    if (reqObj.action === "update") {
+        //alert('update');
+        
+    }
+
+    if (reqObj.action === "delete") {
+        //alert('delete');
+        
+    }
+
+    $scope.ok = function() {
+        $modalInstance.close({
+            ProjectName: $scope.projectName,
+            TaskName: $scope.taskName,
+            By: $scope.assignee,
+            StartTime: $scope.startTime,
+            EndTime: $scope.endTime,
+            TotalHours: $scope.totalHours,
+            HoursPerDay: $scope.hoursPerDay
+        });
+    }
 
 }]);

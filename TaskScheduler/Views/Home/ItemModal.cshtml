@@ -1,0 +1,23 @@
+﻿
+<div class="modal-header">
+    <h3 class="modal-title">{{action}}</h3>
+</div>
+<div class="modal-body">
+    Project Name <input type="text" ng-model="projectName"/>
+    <br/>
+    Task Name <input type="text" ng-model="taskName" />
+    <br />
+    Assign To <input type="text" ng-model="assignee"/>
+    <br/>
+    Start Time <input type="text" ng-model ="startTime">
+    <br/>
+    End Time <input type="text" ng-model="endTime">
+    <br/>
+    Total Hours <input type="text" ng-model="totalHours">
+    <br/>
+    Hours Per Day <input type="text" ng-model="hoursPerDay">
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+</div>
