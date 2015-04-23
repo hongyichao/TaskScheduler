@@ -32,20 +32,29 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', function ($scope, item
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
 
-    $scope.populateGridData = function()
+    $scope.populateGridData = function(newPageSize, newCurrentPage)
     {
-        itemReq.getItems({ pageSize: 10, page: 1 }, function (itemData) {
-            
+        itemReq.getItems({ pageSize: newPageSize, page: newCurrentPage }, function (itemData) {
+            $scope.totalItems = itemData.totalItems;
             $scope.myData = itemData.items;
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
-
-            $scope.totalItems = itemData.totalItems;
-            
         });
     }
 
-    $scope.populateGridData();
+    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+
+    $scope.$watchCollection('pagingOptions', function (newOption, oldOption) {
+        if(newOption.pageSize!==oldOption.pageSize) {
+            $scope.pagingOptions.currentPage = 1;
+            $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        }
+
+        if(newOption.currentPage !== oldOption.currentPage) {
+            $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        }
+    });
+
 
 }]);
