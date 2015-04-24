@@ -103,6 +103,18 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
     $scope.totalHours = "";
     $scope.hoursPerDay = "";
 
+    $scope.showStartTimeCalander = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.isStartTimeCalanderOpened = true;
+    }
+
+    $scope.showEndTimeCalander = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.isEndTimeCalanderOpened = true;
+    }
+
     if (reqObj.action === "add") {
         //alert('add');
     }

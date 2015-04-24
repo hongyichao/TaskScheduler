@@ -9,9 +9,11 @@
     <br />
     Assign To <input type="text" ng-model="assignee"/>
     <br/>
-    Start Time <input type="text" ng-model ="startTime">
+    Start Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" />
+    <button ng-click="showStartTimeCalander($event)"><i class="glyphicon glyphicon-calendar"></i></button>
     <br/>
-    End Time <input type="text" ng-model="endTime">
+    End Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" />
+    <button ng-click="showEndTimeCalander($event)"><i class="glyphicon glyphicon-calendar"></i></button>
     <br/>
     Total Hours <input type="text" ng-model="totalHours">
     <br/>
