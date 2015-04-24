@@ -9,6 +9,10 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
     
+    var toDoUpdateButtonCellTemplate = '<div class="ngCellText"  data-ng-model="row">';
+    toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '<button data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
+    toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '</div>';
+
     $scope.itemGridOptions = {
         data: 'myData',
         selectedItems : $scope.selectedItems,
@@ -26,7 +30,8 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
             { displayName: 'Start Time', field: 'StartTime', cellFilter: "date:'yyyy-MM-dd'" },
             { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'" },
             { displayName: 'Total Hours', field: 'TotalHours' },
-            { displayName: 'Hours Per Day', field: 'HoursPerDay' }
+            { displayName: 'Hours Per Day', field: 'HoursPerDay' },
+            { cellTemplate: toDoUpdateButtonCellTemplate }
         ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
@@ -65,8 +70,8 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
                         return {action:"add",itemInstance:{}}
                     } else {
                         $scope.selectedItem = {};
-                        if ($scope.itemGridOptions.selectedItems[0]==="undefined") {
-                            $scope.selectedItems = $scope.itemGridOptions.selectedItems[0];
+                        if (row.entity !== "undefined") {
+                            $scope.selectedItem = row.entity;
                         }
                         return { action: "update", itemInstance: $scope.selectedItem }
                     }
@@ -77,14 +82,18 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
         if (action === "add") {
             itemModalInstance.result.then(function (anItem) {
                 itemReq.addItem(anItem).$promise.then(function () {                    
-                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage)
+                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
                 });
                 $log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
             });
         }
         
         if(action==="update") {
-            
+            itemModalInstance.result.then(function (updatedItem) {
+                itemReq.updateItem({ Id: updatedItem.Id },updatedItem).$promise.then(function () {
+                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+                });
+            })
         }
 
         if(action==="delete") {
@@ -94,7 +103,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
 }]);
 
 itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', function ($scope, $modalInstance, reqObj) {
-
+    
     $scope.projectName = "";
     $scope.taskName = "";
     $scope.assignee = "";
@@ -117,11 +126,22 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
 
     if (reqObj.action === "add") {
         //alert('add');
+        $scope.modalAction = "Add New Task";
     }
 
     if (reqObj.action === "update") {
         //alert('update');
-        
+        $scope.modalAction = "Edit Task";
+
+        var itemInstance = reqObj.itemInstance;
+        $scope.id = itemInstance.Id;
+        $scope.projectName = itemInstance.ProjectName;
+        $scope.taskName = itemInstance.TaskName;
+        $scope.assignee = itemInstance.By;
+        $scope.startTime = itemInstance.StartTime;
+        $scope.endTime = itemInstance.EndTime;
+        $scope.totalHours = itemInstance.TotalHours;
+        $scope.hoursPerDay = itemInstance.HoursPerDay;
     }
 
     if (reqObj.action === "delete") {
@@ -129,16 +149,35 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
         
     }
 
-    $scope.ok = function() {
-        $modalInstance.close({
-            ProjectName: $scope.projectName,
-            TaskName: $scope.taskName,
-            By: $scope.assignee,
-            StartTime: $scope.startTime,
-            EndTime: $scope.endTime,
-            TotalHours: $scope.totalHours,
-            HoursPerDay: $scope.hoursPerDay
-        });
+
+    $scope.ok = function () {
+        var itemToReturn = {};
+        if (reqObj.action === "add") {
+            itemToReturn = {
+                ProjectName: $scope.projectName,
+                TaskName: $scope.taskName,
+                By: $scope.assignee,
+                StartTime: $scope.startTime,
+                EndTime: $scope.endTime,
+                TotalHours: $scope.totalHours,
+                HoursPerDay: $scope.hoursPerDay
+            }
+        }
+        else {
+            itemToReturn = {
+                Id: $scope.id,
+                ProjectName: $scope.projectName,
+                TaskName: $scope.taskName,
+                By: $scope.assignee,
+                StartTime: $scope.startTime,
+                EndTime: $scope.endTime,
+                TotalHours: $scope.totalHours,
+                HoursPerDay: $scope.hoursPerDay
+            }
+        }
+        $modalInstance.close(
+            itemToReturn
+        );
     }
 
     $scope.cancel = function () {
