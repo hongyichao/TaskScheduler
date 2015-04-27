@@ -13,6 +13,10 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '<button data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
     toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '</div>';
 
+    var toDoDeleteButtonCellTemplate = '<div class="ngCellText"  data-ng-model="row">';
+    toDoDeleteButtonCellTemplate = toDoDeleteButtonCellTemplate + '<button data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
+    toDoDeleteButtonCellTemplate = toDoDeleteButtonCellTemplate + '</div>';
+
     $scope.itemGridOptions = {
         data: 'myData',
         selectedItems : $scope.selectedItems,
@@ -31,7 +35,8 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
             { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'" },
             { displayName: 'Total Hours', field: 'TotalHours' },
             { displayName: 'Hours Per Day', field: 'HoursPerDay' },
-            { cellTemplate: toDoUpdateButtonCellTemplate }
+            { cellTemplate: toDoUpdateButtonCellTemplate },
+            { cellTemplate: toDoDeleteButtonCellTemplate }
         ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
@@ -68,12 +73,20 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
                 reqObj: function () {
                     if(action==="add") {
                         return {action:"add",itemInstance:{}}
-                    } else {
+                    } 
+                    else if (action === "update") {
                         $scope.selectedItem = {};
                         if (row.entity !== "undefined") {
                             $scope.selectedItem = row.entity;
                         }
                         return { action: "update", itemInstance: $scope.selectedItem }
+                    }
+                    else if (action === "delete"){
+                        $scope.selectedItem = {};
+                        if (row.entity !== "undefined") {
+                            $scope.selectedItem = row.entity;
+                        }
+                        return { action: "delete", itemInstance: $scope.selectedItem }
                     }
                 }
             }
@@ -96,14 +109,24 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
             })
         }
 
-        if(action==="delete") {
-            
+        if (action === "delete") {
+            itemModalInstance.result.then(function (deletedItem) {
+                itemReq.deleteItem({ Id: deletedItem.Id }).$promise.then(function () {
+                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+                });
+            })
         }
     }
 }]);
 
 itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', function ($scope, $modalInstance, reqObj) {
-    
+    $scope.isItemDisabled = false;
+
+    if (reqObj.action === "delete")
+    {
+        $scope.isItemDisabled = true;
+    }
+
     $scope.projectName = "";
     $scope.taskName = "";
     $scope.assignee = "";
@@ -127,11 +150,13 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
     if (reqObj.action === "add") {
         //alert('add');
         $scope.modalAction = "Add New Task";
+        $scope.okBtnDisplayName = "Add";
     }
 
     if (reqObj.action === "update") {
         //alert('update');
         $scope.modalAction = "Edit Task";
+        $scope.okBtnDisplayName = "Update";
 
         var itemInstance = reqObj.itemInstance;
         $scope.id = itemInstance.Id;
@@ -146,7 +171,18 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
 
     if (reqObj.action === "delete") {
         //alert('delete');
-        
+        $scope.modalAction = "Delete Task";
+        $scope.okBtnDisplayName = "Delete";
+
+        var itemInstance = reqObj.itemInstance;
+        $scope.id = itemInstance.Id;
+        $scope.projectName = itemInstance.ProjectName;
+        $scope.taskName = itemInstance.TaskName;
+        $scope.assignee = itemInstance.By;
+        $scope.startTime = itemInstance.StartTime;
+        $scope.endTime = itemInstance.EndTime;
+        $scope.totalHours = itemInstance.TotalHours;
+        $scope.hoursPerDay = itemInstance.HoursPerDay;
     }
 
 

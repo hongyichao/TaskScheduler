@@ -3,23 +3,23 @@
     <h3 class="modal-title">{{modalAction}}</h3>
 </div>
 <div class="modal-body">
-    Project Name <input type="text" ng-model="projectName"/>
+    Project Name <input type="text" ng-model="projectName" ng-disabled="isItemDisabled" />
     <br/>
-    Task Name <input type="text" ng-model="taskName" />
+    Task Name <input type="text" ng-model="taskName" ng-disabled="isItemDisabled" />
     <br />
-    Assign To <input type="text" ng-model="assignee"/>
+    Assign To <input type="text" ng-model="assignee" ng-disabled="isItemDisabled" />
+    <br/>    
+    Start Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" ng-disabled="isItemDisabled" />
+    <button ng-click="showStartTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>    
     <br/>
-    Start Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" />
-    <button ng-click="showStartTimeCalander($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+    End Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" ng-disabled="isItemDisabled" />
+    <button ng-click="showEndTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>
     <br/>
-    End Time <input type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" />
-    <button ng-click="showEndTimeCalander($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+    Total Hours <input type="text" ng-model="totalHours" ng-disabled="isItemDisabled">
     <br/>
-    Total Hours <input type="text" ng-model="totalHours">
-    <br/>
-    Hours Per Day <input type="text" ng-model="hoursPerDay">
+    Hours Per Day <input type="text" ng-model="hoursPerDay" ng-disabled="isItemDisabled">
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-primary" ng-click="ok()">{{okBtnDisplayName}}</button>
     <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
 </div>
