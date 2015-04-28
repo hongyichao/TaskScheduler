@@ -1,7 +1,18 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
 itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', function ($scope, itemReq, $modal, $log) {
-    
+    $scope.projectNameFilter = "";
+    $scope.$watch('projectNameFilter', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            itemReq.searchItems({ projectName: newVal, pageSize: $scope.pagingOptions.pageSize, page: $scope.pagingOptions.currentPage }).$promise.then(function (itemData) {
+                $scope.totalItems = itemData.totalItems;
+                $scope.myData = itemData.items;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            });
+        }
+    });
     $scope.selectedItems = [{}];
     $scope.myData = [
     ];

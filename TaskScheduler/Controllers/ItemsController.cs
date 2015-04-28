@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using ToDoList.Models;
 using ToDoList.ViewModels;
+using ToDoList.Search;
 
 namespace ToDoList.Controllers
 {
@@ -36,11 +37,21 @@ namespace ToDoList.Controllers
 
         [Route("api/searchItems")]
         [HttpGet]
-        public IQueryable<Item> SearchItems([FromUri]Item searchItem)
+        public ItemViewModel SearchItems([FromUri]SearchItem searchItem)
         {
-            return db.Items.Where(i => (i.ProjectName == searchItem.ProjectName || string.IsNullOrEmpty(searchItem.ProjectName))
+            var selectedItems = db.Items.Where(i => (i.ProjectName.ToLower().Contains(searchItem.ProjectName.ToLower()) || string.IsNullOrEmpty(searchItem.ProjectName))
                 && (i.By == searchItem.By || string.IsNullOrEmpty(searchItem.By))
                 );
+
+
+            var pageCount = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(selectedItems.Count()) / searchItem.PageSize));
+
+            var itemPaged = selectedItems
+                .OrderBy(i => i.Id)
+                .Skip((searchItem.Page - 1) * searchItem.PageSize)
+                .Take(searchItem.PageSize).ToList();
+
+            return new ItemViewModel() { totalItems = selectedItems.Count(), items = itemPaged };
         }
         
         // GET: api/Items/5

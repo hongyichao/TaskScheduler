@@ -19,6 +19,7 @@ app.factory("itemReq", ["$resource", function ($resource) {
         'getItems':{methos:'GET'},
         'addItem': { method: 'POST' },
         'updateItem': { method: 'PUT' },
-        'deleteItem': { method: 'DELETE' }
+        'deleteItem': { method: 'DELETE' },
+        'searchItems': { method: 'GET', url: 'api/searchItems' }
     });
 }]);
