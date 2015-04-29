@@ -1,10 +1,14 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
 itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', function ($scope, itemReq, $modal, $log) {
-    $scope.projectNameFilter = "";
-    $scope.$watch('projectNameFilter', function (newVal, oldVal) {
+    $scope.filters = {projectName:""};
+    $scope.$watchCollection('filters', function (newVal, oldVal) {
         if (newVal !== oldVal) {
-            itemReq.searchItems({ projectName: newVal, pageSize: $scope.pagingOptions.pageSize, page: $scope.pagingOptions.currentPage }).$promise.then(function (itemData) {
+            itemReq.searchItems({
+                projectName: newVal.projectName,
+                pageSize: $scope.pagingOptions.pageSize,
+                page: 1
+            }).$promise.then(function (itemData) {
                 $scope.totalItems = itemData.totalItems;
                 $scope.myData = itemData.items;
                 if (!$scope.$$phase) {
@@ -54,14 +58,39 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
 
     $scope.populateGridData = function(newPageSize, newCurrentPage)
     {
-        itemReq.getItems({ pageSize: newPageSize, page: newCurrentPage }, function (itemData) {
-            $scope.totalItems = itemData.totalItems;
-            $scope.myData = itemData.items;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        });
+        alert('test2');
+        if ($scope.isFilterSet() === true) {
+            itemReq.searchItems({
+                projectName: $scope.filters.projectName,
+                pageSize: newPageSize, page: newCurrentPage
+            }).$promise.then(function (itemData) {
+                $scope.totalItems = itemData.totalItems;
+                $scope.myData = itemData.items;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            });
+                
+        } else {
+            itemReq.getItems({ pageSize: newPageSize, page: newCurrentPage }, function (itemData) {
+                $scope.totalItems = itemData.totalItems;
+                $scope.myData = itemData.items;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            });
+        }
     }
+
+    $scope.isFilterSet = function() {
+        for (x in $scope.filters)
+        {
+            if ($scope.filters[x].length > 0) {
+                return true;
+            }
+        }
+        return false;
+    };
 
     $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 

@@ -1,7 +1,13 @@
 ﻿<div class="row">
-    <div class="col-md-8">
-        Project Name <input type="text" ng-model="projectNameFilter" /><br/>
-        <div ng-grid="itemGridOptions"></div>
-    </div>    
-    <div class="col-md-4"><button ng-click="showItemModal('add')">Add New Task</button></div>
+    <div class="row">
+        <div class="col-md-12">
+            Project Name <input type="text" ng-model="filters.projectName" /><br /><br />    
+        </div>
+    </div>
+    <div class="row">
+        <div ng-grid="itemGridOptions" class="col-md-8"></div>
+        <div class="col-md-4"><button ng-click="showItemModal('add')">Add New Task</button>
+        </div>
+    </div>
+    
 </div>
