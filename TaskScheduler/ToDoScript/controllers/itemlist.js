@@ -4,17 +4,16 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     $scope.filters = {projectName:""};
     $scope.$watchCollection('filters', function (newVal, oldVal) {
         if (newVal !== oldVal) {
-            itemReq.searchItems({
-                projectName: newVal.projectName,
-                pageSize: $scope.pagingOptions.pageSize,
-                page: 1
-            }).$promise.then(function (itemData) {
-                $scope.totalItems = itemData.totalItems;
-                $scope.myData = itemData.items;
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
-            });
+                      
+            if ($scope.pagingOptions.currentPage === 1)
+            {
+                $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+            }
+            else
+            {
+                //change current page to triget the Grid to be repopulated since $scope.pagingOptions is $watched
+                $scope.pagingOptions.currentPage = 1;
+            }
         }
     });
     $scope.selectedItems = [{}];
@@ -57,15 +56,14 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     };
 
     $scope.populateGridData = function(newPageSize, newCurrentPage)
-    {
-        alert('test2');
-        if ($scope.isFilterSet() === true) {
+    {        
+        if ($scope.isFilterSet() === true) {            
             itemReq.searchItems({
                 projectName: $scope.filters.projectName,
                 pageSize: newPageSize, page: newCurrentPage
-            }).$promise.then(function (itemData) {
+            }).$promise.then(function (itemData) {                
                 $scope.totalItems = itemData.totalItems;
-                $scope.myData = itemData.items;
+                $scope.myData = itemData.items;                
                 if (!$scope.$$phase) {
                     $scope.$apply();
                 }
@@ -97,11 +95,11 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     $scope.$watchCollection('pagingOptions', function (newOption, oldOption) {
         if(newOption.pageSize!==oldOption.pageSize) {
             $scope.pagingOptions.currentPage = 1;
-            $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+            $scope.populateGridData(newOption.pageSize, $scope.pagingOptions.currentPage);
         }
 
-        if(newOption.currentPage !== oldOption.currentPage) {
-            $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        if (newOption.currentPage !== oldOption.currentPage) {            
+            $scope.populateGridData($scope.pagingOptions.pageSize, newOption.currentPage);
         }
     });
 
