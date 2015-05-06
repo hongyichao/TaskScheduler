@@ -27,6 +27,14 @@ namespace ToDoList.Controllers
         [Route("api/items/{pageSize}/{Page}")]
         public ItemViewModel GetItems(int pageSize, int page) {
 
+            if (pageSize <= 0) {
+                return new ItemViewModel() { totalItems = 0, items = new List<Item>() };
+            }
+
+            if (page <= 0) {
+                return new ItemViewModel() { totalItems = 0, items = new List<Item>() };
+            }
+
             var selectedItems= db.Items
                 .OrderBy(i => i.Id)
                 .Skip((page - 1) * pageSize)
