@@ -141,10 +141,10 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
         
         if(action==="update") {
             itemModalInstance.result.then(function (updatedItem) {
-                itemReq.updateItem({ Id: updatedItem.Id },updatedItem).$promise.then(function () {
+                itemReq.updateItem({ Id: updatedItem.Id }, updatedItem).$promise.then(function () {
                     $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
                 });
-            })
+            });
         }
 
         if (action === "delete") {
@@ -152,13 +152,13 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
                 itemReq.deleteItem({ Id: deletedItem.Id }).$promise.then(function () {
                     $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
                 });
-            })
+            });
         }
     }
 }]);
 
 itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', function ($scope, $modalInstance, reqObj) {
-    $scope.isItemDisabled = false;
+    $scope.isItemDisabled = false; 
 
     if (reqObj.action === "delete")
     {
@@ -256,6 +256,10 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancelled');
+    }
+
+    $scope.validateAddAction = function () {
+        
     }
 
 }]);
