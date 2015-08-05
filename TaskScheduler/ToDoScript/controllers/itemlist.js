@@ -135,7 +135,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
                 itemReq.addItem(anItem).$promise.then(function () {                    
                     $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
                 });
-                $log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
+                //$log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
             });
         }
         
@@ -226,6 +226,7 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
 
     $scope.ok = function () {
         var itemToReturn = {};
+        var isItemValid = true;
         if (reqObj.action === "add") {
             itemToReturn = {
                 ProjectName: $scope.projectName,
@@ -249,17 +250,83 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
                 HoursPerDay: $scope.hoursPerDay
             }
         }
-        $modalInstance.close(
-            itemToReturn
-        );
+
+        if (reqObj.action === "add" || reqObj.action === "update") {
+            isItemValid = $scope.validateRequiredFields();
+            if (isItemValid) {
+                isItemValid = $scope.validateIntFields();
+                if(isItemValid) {
+                    isItemValid = $scope.validateDateFields();
+                }
+            }
+        }
+
+        if (isItemValid) {
+            $modalInstance.close(
+                itemToReturn
+            );  
+        }
     }
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancelled');
     }
 
-    $scope.validateAddAction = function () {
+    $scope.validateRequiredFields = function () {
+        if($scope.projectName.length === 0) {
+            alert('Project Name is required');
+            return false;
+        }
+
+        if ($scope.assignee.length === 0) {
+            alert('Project assignee is required');
+            return false;
+        }
+        return true;
+    }
+
+    $scope.validateIntFields = function()
+    {
+        var reg = new RegExp('^[0-9]*$');
+        
+        if(!reg.test($scope.totalHours)) {
+            alert('Invalid total hours');
+            return false;
+        }
+
+        if (!reg.test($scope.hoursPerDay)) {
+            alert('Invalid hours per day');
+            return false;
+        }
+
+        return true;
+    }
+
+    $scope.validateDateFields = function() {
+        var reg = /(\d{4})-(\d{1,2})-(\d{1,2})/;
+
+        var test = new Date($scope.startTime);
+
+        alert(Date.parse($scope.startTime));
+        //alert(test.getDate());
+        //alert(test.getMonth());
+
+        alert('Current start time: ' + $scope.startTime);
+        if(!reg.test($scope.startTime)) {
+            alert('Invalid start time: ' + $scope.startTime);
+            return false;
+        }
+
+        if (!reg.test($scope.endTime)) {
+            alert('Invalid end time: ' + $scope.endTime);
+            return false;
+        }
+        return true;
+    }
+
+    $scope.validateDateValue = function() {
         
     }
+    
 
 }]);

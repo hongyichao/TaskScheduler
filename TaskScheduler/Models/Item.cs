@@ -14,7 +14,7 @@ namespace ToDoList.Models
         public string By { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public int TotalHours { get; set; }
-        public int HoursPerDay { get; set; }
+        public int? TotalHours { get; set; }
+        public int? HoursPerDay { get; set; }
     }
 }
