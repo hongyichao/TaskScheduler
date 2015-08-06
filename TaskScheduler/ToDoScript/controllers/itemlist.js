@@ -256,7 +256,7 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
             if (isItemValid) {
                 isItemValid = $scope.validateIntFields();
                 if(isItemValid) {
-                    //isItemValid = $scope.validateDateFields();
+                    isItemValid = $scope.validateDateFields();
                 }
             }
         }
@@ -306,10 +306,7 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
         
         var startDtTest = new Date($scope.startTime);
 
-        alert(startDtTest.toString());
-        alert($scope.startTime);
-
-        if (startDtTest.toString() !== $scope.startTime || startDtTest.toString() === 'Invalid Date')
+        if (startDtTest.toString() === 'Invalid Date')
         {
             alert('Invalid start time: ' + $scope.startTime);
             return false;
@@ -317,16 +314,18 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
 
         var endDtTest = new Date($scope.endTime);
 
-        alert(endDtTest.toString());
-
-        if (endDtTest.toString() !== $scope.startTime || endDtTest.toString() === 'Invalid Date') {
+        if (endDtTest.toString() === 'Invalid Date') {
             alert('Invalid end time: ' + $scope.endTime);
             return false;
         }
         return true;
     }
 
-    $scope.validateDateValue = function() {
+    $scope.validateDateValue = function (dt) {
+
+        if(dt instanceof Date) {
+            
+        }
         
     }
     
