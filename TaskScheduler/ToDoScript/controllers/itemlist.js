@@ -256,7 +256,7 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
             if (isItemValid) {
                 isItemValid = $scope.validateIntFields();
                 if(isItemValid) {
-                    isItemValid = $scope.validateDateFields();
+                    //isItemValid = $scope.validateDateFields();
                 }
             }
         }
@@ -303,21 +303,23 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
     }
 
     $scope.validateDateFields = function() {
-        var reg = /(\d{4})-(\d{1,2})-(\d{1,2})/;
+        
+        var startDtTest = new Date($scope.startTime);
 
-        var test = new Date($scope.startTime);
+        alert(startDtTest.toString());
+        alert($scope.startTime);
 
-        alert(Date.parse($scope.startTime));
-        //alert(test.getDate());
-        //alert(test.getMonth());
-
-        alert('Current start time: ' + $scope.startTime);
-        if(!reg.test($scope.startTime)) {
+        if (startDtTest.toString() !== $scope.startTime || startDtTest.toString() === 'Invalid Date')
+        {
             alert('Invalid start time: ' + $scope.startTime);
             return false;
         }
 
-        if (!reg.test($scope.endTime)) {
+        var endDtTest = new Date($scope.endTime);
+
+        alert(endDtTest.toString());
+
+        if (endDtTest.toString() !== $scope.startTime || endDtTest.toString() === 'Invalid Date') {
             alert('Invalid end time: ' + $scope.endTime);
             return false;
         }
