@@ -17,19 +17,4 @@ namespace ToDoList.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-        
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-
-        public System.Data.Entity.DbSet<ToDoList.Models.Item> Items { get; set; }
-    }
 }

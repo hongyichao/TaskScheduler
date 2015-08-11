@@ -1,6 +1,6 @@
 ﻿
 var app = angular.module("toDoApp", ['ngRoute', 'ngResource', 'ngGrid', 'ui.bootstrap',
-'itemListModule'
+'itemListModule','projectListModule'
 ]);
 
 app.config(["$routeProvider", function ($routeProvider) {
@@ -8,10 +8,21 @@ app.config(["$routeProvider", function ($routeProvider) {
         templateUrl: '/Home/ItemList',
         controller: 'itemListCtrl'
     }).when('/projects', {
-        templateUrl: '/Home/Projects'
+        templateUrl: '/Home/Projects',
+        controller: 'projectListCtrl'
     });
 }]);
 
+
+app.factory("projectReq", ["$resource", function ($resource) {
+    return $resource("api/projects/:id/:pageSize/:page", null, {
+        'getAllProjects': { method: 'GET', isArray: true },
+        'getProjects': { method: 'GET' },
+        'addProject': { method: 'POST' },
+        'updateProject': { method: 'PUT' },
+        'deleteProject': { method: 'DELETE' }
+    });
+}]);
 
 app.factory("itemReq", ["$resource", function ($resource) {
     return $resource("api/items/:id/:pageSize/:page", null, {
