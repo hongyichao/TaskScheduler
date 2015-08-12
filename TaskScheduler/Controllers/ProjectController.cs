@@ -21,9 +21,10 @@ namespace ToDoList.Controllers
             return db.Projects;
         }
 
-        [Route("api/items/{pageSize}/{page}")]
+        [Route("api/project/{pageSize}/{page}")]
         public ProjectViewModel GetProjects(int pageSize, int page)
         {
+            
             if (pageSize <= 0 || page<=0)
             {
                 return new ProjectViewModel(){TotalNumber = 0, Projects = new List<Project>()};
@@ -35,10 +36,15 @@ namespace ToDoList.Controllers
 
         }
 
-        [Route("api/searchProjects")]
+        [Route("api/searchProject")]
         [HttpGet]
         public ProjectViewModel SearchProjects([FromUri]SearchProject searchProject)
         {
+            if (searchProject.PageSize <= 0 || searchProject.Page <= 0)
+            {
+                return new ProjectViewModel() { TotalNumber = 0, Projects = new List<Project>() };
+            }
+
             var selectedProjects = from p in db.Projects
                                    where string.IsNullOrEmpty(searchProject.ProjectName) || p.Name == searchProject.ProjectName
                                    select p;

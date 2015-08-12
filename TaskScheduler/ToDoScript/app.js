@@ -15,7 +15,7 @@ app.config(["$routeProvider", function ($routeProvider) {
 
 
 app.factory("projectReq", ["$resource", function ($resource) {
-    return $resource("api/projects/:id/:pageSize/:page", null, {
+    return $resource("api/project/:id/:pageSize/:page", null, {
         'getAllProjects': { method: 'GET', isArray: true },
         'getProjects': { method: 'GET' },
         'addProject': { method: 'POST' },
