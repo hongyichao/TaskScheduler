@@ -27,7 +27,7 @@ app.factory("projectReq", ["$resource", function ($resource) {
 app.factory("itemReq", ["$resource", function ($resource) {
     return $resource("api/items/:id/:pageSize/:page", null, {
         'getAllItems': { method: 'GET', isArray: true },
-        'getItems':{methos:'GET'},
+        'getItems':{method:'GET'},
         'addItem': { method: 'POST' },
         'updateItem': { method: 'PUT' },
         'deleteItem': { method: 'DELETE' },

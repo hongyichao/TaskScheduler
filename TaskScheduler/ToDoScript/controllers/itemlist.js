@@ -17,8 +17,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
         }
     });
     $scope.selectedItems = [{}];
-    $scope.myData = [
-    ];
+    $scope.myData = [];
     $scope.totalItems = $scope.myData.length;
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };

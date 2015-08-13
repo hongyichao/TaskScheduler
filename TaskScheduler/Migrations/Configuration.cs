@@ -28,45 +28,52 @@ namespace ToDoList.Migrations
             //    );
             //
 
-                context.Items.AddOrUpdate(
-                  p => p.ProjectName,
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
-                  new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
-                  new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
-                  new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")}
-                );
+            context.Items.AddOrUpdate(
+                p => p.ProjectName,
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")},
+                new Item { ProjectName="Project 1", TaskName="Task 1", By="Hongyi Chao", StartTime=Convert.ToDateTime("2015-04-01"), EndTime=Convert.ToDateTime("2015-04-28")},
+                new Item { ProjectName="Project 2", TaskName="Task 1", By="Lucas Chao", StartTime=Convert.ToDateTime("2015-05-01"), EndTime=Convert.ToDateTime("2015-05-28")},
+                new Item { ProjectName="Project 3", TaskName="Task 1", By="Terry Chao", StartTime=Convert.ToDateTime("2015-06-01"), EndTime=Convert.ToDateTime("2015-06-28")}
+            );
+
+            for(int i=1; i<50; i++)
+            {
+                context.Projects.AddOrUpdate(p=>p.Name,
+                new Project(){Name="Project"+i});
+            }
+            
         }
     }
 }

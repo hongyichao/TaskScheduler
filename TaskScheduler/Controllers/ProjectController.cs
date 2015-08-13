@@ -17,12 +17,12 @@ namespace ToDoList.Controllers
     {        
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public IQueryable GetProjects() {
+        public IQueryable GetProject() {
             return db.Projects;
         }
 
         [Route("api/project/{pageSize}/{page}")]
-        public ProjectViewModel GetProjects(int pageSize, int page)
+        public ProjectViewModel GetProject(int pageSize, int page)
         {
             
             if (pageSize <= 0 || page<=0)
@@ -32,13 +32,13 @@ namespace ToDoList.Controllers
 
             var selectedProjects = db.Projects.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            return new ProjectViewModel(){TotalNumber = selectedProjects.Count, Projects = selectedProjects};
+            return new ProjectViewModel() { TotalNumber = db.Projects.Count(), Projects = selectedProjects };
 
         }
 
         [Route("api/searchProject")]
         [HttpGet]
-        public ProjectViewModel SearchProjects([FromUri]SearchProject searchProject)
+        public ProjectViewModel SearchProject([FromUri]SearchProject searchProject)
         {
             if (searchProject.PageSize <= 0 || searchProject.Page <= 0)
             {
