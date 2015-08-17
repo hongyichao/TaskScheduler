@@ -1,4 +1,3 @@
-using ToDoList.Models;
 using ToDoList.Repository;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ToDoList.App_Start.NinjectWebCommon), "Start")]
@@ -64,8 +63,7 @@ namespace ToDoList.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
-            kernel.Bind<IItemRepository>().To<IItemRepository>();
+            kernel.Bind<IItemRepository>().To<ItemRepository>();
 
         }        
     }

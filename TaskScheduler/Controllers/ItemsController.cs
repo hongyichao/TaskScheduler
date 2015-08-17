@@ -20,13 +20,11 @@ namespace ToDoList.Controllers
         //private ApplicationDbContext db = new ApplicationDbContext();
         private IItemRepository itemRepository; 
         private UnitOfWork unitOfWork = new UnitOfWork();
-
         
         public ItemsController()
         {
             this.itemRepository = unitOfWork.GetItemRepository();
         }
-        
 
         public ItemsController(IItemRepository itemRepository)
         {
