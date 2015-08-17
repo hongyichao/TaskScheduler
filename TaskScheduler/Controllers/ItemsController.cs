@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ToDoList.Models;
+using ToDoList.Repository;
 using ToDoList.ViewModels;
 using ToDoList.Search;
 
@@ -16,57 +17,44 @@ namespace ToDoList.Controllers
 {
     public class ItemsController : ApiController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
+        private IItemRepository itemRepository; 
+        private UnitOfWork unitOfWork = new UnitOfWork();
 
+        public ItemsController()
+        {
+            this.itemRepository = unitOfWork.GetItemRepository();
+        }
+
+        public ItemsController(IItemRepository itemRepository)
+        {
+            this.itemRepository = itemRepository;
+        }
+        
         // GET: api/Items
         public IQueryable<Item> GetItems()
         {
-            return db.Items;
+            return itemRepository.GetAllItems();
         }
 
         [Route("api/items/{pageSize}/{Page}")]
         public ItemViewModel GetItems(int pageSize, int page) {
 
-            if (pageSize <= 0) {
-                return new ItemViewModel() { totalItems = 0, items = new List<Item>() };
-            }
-
-            if (page <= 0) {
-                return new ItemViewModel() { totalItems = 0, items = new List<Item>() };
-            }
-
-            var selectedItems= db.Items
-                .OrderBy(i => i.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList();
-
-            return new ItemViewModel() { totalItems=db.Items.Count(), items = selectedItems  };
+            return itemRepository.GetPagedItems(pageSize, page);
         }
 
         [Route("api/searchItems")]
         [HttpGet]
         public ItemViewModel SearchItems([FromUri]SearchItem searchItem)
         {
-            var selectedItems = db.Items.Where(i => (i.ProjectName.ToLower().Contains(searchItem.ProjectName.ToLower()) || string.IsNullOrEmpty(searchItem.ProjectName))
-                && (i.By == searchItem.By || string.IsNullOrEmpty(searchItem.By))
-                );
-
-
-            var pageCount = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(selectedItems.Count()) / searchItem.PageSize));
-
-            var itemPaged = selectedItems
-                .OrderBy(i => i.Id)
-                .Skip((searchItem.Page - 1) * searchItem.PageSize)
-                .Take(searchItem.PageSize).ToList();
-
-            return new ItemViewModel() { totalItems = selectedItems.Count(), items = itemPaged };
+            return itemRepository.GetSearchedItems(searchItem);
         }
         
         // GET: api/Items/5
         [ResponseType(typeof(Item))]
         public IHttpActionResult GetItem(int id)
         {
-            Item item = db.Items.Find(id);
+            Item item = itemRepository.GetItemById(id);
             if (item == null)
             {
                 return NotFound();
@@ -89,15 +77,15 @@ namespace ToDoList.Controllers
                 return BadRequest();
             }
 
-            db.Entry(item).State = EntityState.Modified;
+            itemRepository.UpdateItem(item);
 
             try
             {
-                db.SaveChanges();
+                itemRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ItemExists(id))
+                if (!itemRepository.IsItemExisting(id))
                 {
                     return NotFound();
                 }
@@ -119,8 +107,8 @@ namespace ToDoList.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Items.Add(item);
-            db.SaveChanges();
+            itemRepository.InsertItem(item);
+            itemRepository.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = item.Id }, item);
         }
@@ -129,30 +117,23 @@ namespace ToDoList.Controllers
         [ResponseType(typeof(Item))]
         public IHttpActionResult DeleteItem(int id)
         {
-            Item item = db.Items.Find(id);
-            if (item == null)
+            if (!itemRepository.IsItemExisting(id))
             {
                 return NotFound();
             }
 
-            db.Items.Remove(item);
-            db.SaveChanges();
+            Item item = itemRepository.GetItemById(id);
+
+            itemRepository.DeleteItem(item);
+            itemRepository.Save();
 
             return Ok(item);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+            itemRepository.Dispose();
             base.Dispose(disposing);
-        }
-
-        private bool ItemExists(int id)
-        {
-            return db.Items.Count(e => e.Id == id) > 0;
         }
     }
 }
