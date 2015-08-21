@@ -9,7 +9,7 @@ using ToDoList.Controllers;
 using ToDoList.Models;
 using ToDoList.Search;
 using ToDoList.Repository;
-using Moq;
+using Moq; //add Moq in order to use Mock object for testing
 using ToDoList.ViewModels;
 
 namespace ToDoList.Tests.Controllers
@@ -31,46 +31,21 @@ namespace ToDoList.Tests.Controllers
 
             var mockItemRepo = new Mock<IItemRepository>();
 
+
+
+            mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 10, 1);
+
+            mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 20, 9999999);
             
-            mockItemRepo.Setup(it => it.GetPagedItems(10,1)).Returns(new ItemViewModel()
-                                                                     {
-                                                                         totalItems = itemList.Count,
-                                                                         items = itemList
-                                                                     });
-            mockItemRepo.Setup(it => it.GetPagedItems(20, 9999999)).Returns(new ItemViewModel()
-                                                                            {
-                                                                                totalItems = itemList.Count,
-                                                                                items = new List<Item>()
-                                                                            });
+            mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 20, 1);
 
-            pageSize = 20;
-            page = 1;
-
-            mockItemRepo.Setup(it => it.GetPagedItems(pageSize, page)).Returns(new ItemViewModel()
-            {
-                totalItems = itemList.Count,
-                items = itemList.OrderBy(i => i.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList()
-            });
-
-            pageSize = -1;
-            page = -1;
-
-            mockItemRepo.Setup(it => it.GetPagedItems(pageSize, page)).Returns(new ItemViewModel()
-            {
-                totalItems = itemList.Count,
-                items = itemList.OrderBy(i => i.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize).ToList()
-            });
-
+            mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, -1, -1);
+            
             ItemsController ic = new ItemsController(mockItemRepo.Object);
-
 
             Assert.IsTrue(ic.GetItems(10,1).totalItems>0);
 
-            Assert.AreEqual(100, ic.GetItems(10, 1).items.Count);
+            Assert.AreEqual(10, ic.GetItems(10, 1).items.Count);
 
             Assert.AreEqual(100, ic.GetItems(10,1).totalItems);
 
@@ -84,49 +59,67 @@ namespace ToDoList.Tests.Controllers
 
         }
 
+
+        private Mock<IItemRepository> SetupGetPagedItems(Mock<IItemRepository> mockItemRepo, 
+            ICollection<Item> itemList, 
+            int pageSize, int page)
+        {
+            mockItemRepo.Setup(it => it.GetPagedItems(pageSize, page)).Returns(new ItemViewModel()
+            {
+                totalItems = itemList.Count,
+                items = itemList.OrderBy(i => i.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize).ToList()
+            });
+
+            return mockItemRepo;
+        }
+
         [TestMethod]
         public void TestSearchItems()
         {
-            /*
-            ItemsController ic = new ItemsController();
+            var items = new List<Item>();
 
-            Item i = new Item()
+            for (int x = 0; x < 100; x++)
             {
-                ProjectName = "Visual Studio Unit Testing",
-                TaskName = "Test Controller",
-                StartTime = Convert.ToDateTime("2015-05-06"),
-                EndTime = Convert.ToDateTime("2015-05-26"),
-                HoursPerDay = 2,
-                TotalHours = 40,
-                By = "Hongyi"
-            };
-
-            if (ic.GetItems().Count() == 0)
-            {
-                for (int x = 0; x < 100; x++)
-                {
-                    ic.PostItem(i);
-                }
+                items.Add(new Item(){ProjectName = "Project " + x.ToString()});
             }
 
-            SearchItem si = new SearchItem() {
-                ProjectName = "Visual Studio Unit Testing",
-                TaskName = "Test Controller"
-            };
+            var itemRepo = new Mock<IItemRepository>(); 
 
-            si.Page = 1;
-            si.PageSize = 20;
+            var searchedItem = new SearchItem() {ProjectName = "project 1", 
+                Page = 1, PageSize = 10};
 
-            Assert.IsTrue(ic.SearchItems(si).items.Count==20);
+            itemRepo = SetupGetSearchedItem(itemRepo, items, searchedItem);
+            
+            ItemsController ic = new ItemsController(itemRepo.Object);
 
-            si.ProjectName = "visual studio unit testing";
+            Assert.AreEqual(11, ic.SearchItems(searchedItem).totalItems);
+            Assert.AreEqual(10, ic.SearchItems(searchedItem).items.Count);
+            Assert.IsTrue(ic.SearchItems(searchedItem).items.Count == 10);
+            Assert.IsFalse(ic.SearchItems(searchedItem).items.Count==20);
+            
+        }
 
-            Assert.AreEqual(20, ic.SearchItems(si).items.Count);
+        private Mock<IItemRepository> SetupGetSearchedItem(Mock<IItemRepository> itemRepo, List<Item> items,
+            SearchItem searchedItem)
+        {
+            var selectedItems = items.Where(i => (i.ProjectName.ToLower()
+                .Contains(searchedItem.ProjectName.ToLower()) || string.IsNullOrEmpty(searchedItem.ProjectName))
+                && (i.By == searchedItem.By || string.IsNullOrEmpty(searchedItem.By))
+                );
 
-            si.ProjectName = "visual studio code unit testing";
+            itemRepo.Setup(i => i.GetSearchedItems(searchedItem))
+                .Returns(new ItemViewModel()
+                         {
+                             totalItems = selectedItems.Count(), 
+                             items = selectedItems
+                            .OrderBy(i => i.Id)
+                            .Skip((searchedItem.Page - 1) * searchedItem.PageSize)
+                            .Take(searchedItem.PageSize).ToList()
+                         });
 
-            Assert.IsFalse(ic.SearchItems(si).items.Count==20);
-            */
+            return itemRepo;
         }
     }
 }
