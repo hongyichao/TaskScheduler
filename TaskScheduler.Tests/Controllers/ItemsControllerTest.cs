@@ -31,30 +31,18 @@ namespace ToDoList.Tests.Controllers
 
             var mockItemRepo = new Mock<IItemRepository>();
 
-
-
             mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 10, 1);
-
             mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 20, 9999999);
-            
             mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, 20, 1);
-
             mockItemRepo = SetupGetPagedItems(mockItemRepo, itemList, -1, -1);
-            
             ItemsController ic = new ItemsController(mockItemRepo.Object);
 
             Assert.IsTrue(ic.GetItems(10,1).totalItems>0);
-
             Assert.AreEqual(10, ic.GetItems(10, 1).items.Count);
-
             Assert.AreEqual(100, ic.GetItems(10,1).totalItems);
-
             Assert.IsTrue(ic.GetItems(20, 9999999).items.Count==0);
-
             Assert.IsFalse(ic.GetItems(20, 1).totalItems == 0);
-
             Assert.IsTrue(ic.GetItems(-1, -1).totalItems > 0);
-
             Assert.IsFalse(ic.GetItems(-1, -1).items.Count > 0);
 
         }
