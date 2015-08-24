@@ -231,8 +231,8 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
                 ProjectName: $scope.projectName,
                 TaskName: $scope.taskName,
                 By: $scope.assignee,
-                StartTime: $scope.startTime,
-                EndTime: $scope.endTime,
+                StartTime: $scope.convertDateObjectToString($scope.startTime),
+                EndTime: $scope.convertDateObjectToString($scope.endTime),
                 TotalHours: $scope.totalHours,
                 HoursPerDay: $scope.hoursPerDay
             }
@@ -243,8 +243,8 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
                 ProjectName: $scope.projectName,
                 TaskName: $scope.taskName,
                 By: $scope.assignee,
-                StartTime: $scope.startTime,
-                EndTime: $scope.endTime,
+                StartTime: $scope.convertDateObjectToString($scope.startTime),
+                EndTime: $scope.convertDateObjectToString($scope.endTime),
                 TotalHours: $scope.totalHours,
                 HoursPerDay: $scope.hoursPerDay
             }
@@ -326,6 +326,12 @@ itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', funct
             
         }
         
+    }
+
+    $scope.convertDateObjectToString = function (dtObj)
+    {
+        var aDate = new Date(dtObj);
+        return aDate.getFullYear() + '-' + (aDate.getMonth() + 1) + '-' + aDate.getDate();
     }
     
 
