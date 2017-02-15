@@ -6,31 +6,39 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/angularjs")
         @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/todo")        
+        @Scripts.Render("~/bundles/todo")    
+        <script>
+            $(document).ready(function () {
+                $('ul.nav li a').on('click',
+                function (e) {
+                    $('#tsnavbar ul li').removeClass('active');
+                    $(this).parent().addClass('active');
+                });
+            });
+            
+        </script>  
     </head>
     <body ng-app="toDoApp">
-        <div class="container">
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tsnavbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <span class="navbar-brand">Job Cooper</span>
-                    </div>
-                    <div id="tsnavbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#/">Tasks</a></li>
-                            <li><a href="#/projects">Projects</a></li>
-                            <li>@Html.ActionLink("API Index", "Index", "Help", new { area = "" }, null)</li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div><!--/.container-fluid -->
-            </nav>
-        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tsnavbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="navbar-brand">Job Cooper</span>
+                </div>
+                <div id="tsnavbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#/">Tasks</a></li>
+                        <li><a href="#/projects">Projects</a></li>
+                        @*<li>@Html.ActionLink("API Index", "Index", "Help", new { area = "" }, null)</li>*@
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
         <br/><br/>
         <div class="container">                                       
             <div ng-view></div>
