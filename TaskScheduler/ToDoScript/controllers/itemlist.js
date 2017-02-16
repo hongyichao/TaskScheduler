@@ -22,13 +22,11 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
     
-    var toDoUpdateButtonCellTemplate = '<div class="ngCellText"  data-ng-model="row">';
-    toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '<button data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
-    toDoUpdateButtonCellTemplate = toDoUpdateButtonCellTemplate + '</div>';
+    var toDoEditButtonsTemplate = '<div class="ngCellText"  data-ng-model="row">';
+    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
+    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
+    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '</div>';
 
-    var toDoDeleteButtonCellTemplate = '<div class="ngCellText"  data-ng-model="row">';
-    toDoDeleteButtonCellTemplate = toDoDeleteButtonCellTemplate + '<button data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
-    toDoDeleteButtonCellTemplate = toDoDeleteButtonCellTemplate + '</div>';
 
     $scope.itemGridOptions = {
         data: 'myData',
@@ -48,8 +46,7 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
             { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'" },
             { displayName: 'Total Hours', field: 'TotalHours' },
             { displayName: 'Hours Per Day', field: 'HoursPerDay' },
-            { cellTemplate: toDoUpdateButtonCellTemplate },
-            { cellTemplate: toDoDeleteButtonCellTemplate }
+            { cellTemplate: toDoEditButtonsTemplate }            
         ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
