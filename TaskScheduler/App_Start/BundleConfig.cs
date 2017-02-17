@@ -41,6 +41,10 @@ namespace ToDoList
                       "~/Content/ng-grid.css"
                       ));
 
+            bundles.Add(new StyleBundle("~/ToDoStyle/appCss").Include(
+                "~/ToDoStyle/item.css"
+                ));
+
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

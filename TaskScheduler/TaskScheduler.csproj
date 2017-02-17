@@ -1137,6 +1137,8 @@
     <Content Include="ToDoScript\app.js" />
     <Content Include="ToDoScript\controllers\itemlist.js" />
     <Content Include="ToDoScript\controllers\projectList.js" />
+    <Content Include="ToDoScript\plugin\ng-grid-flexible-height.js" />
+    <Content Include="ToDoStyle\item.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

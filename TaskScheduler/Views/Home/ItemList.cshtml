@@ -9,12 +9,12 @@
     <br />
     <div class="row">
         <div class="col-md-12">
-            <button ng-click="showItemModal('add')">Add New Task</button>
+            <button class="btn btn-primary" ng-click="showItemModal('add')">Add New Task</button>
         </div>
     </div>
     <br />
-    <div class="row" style="width:1000px;">                
-        <div ng-grid="itemGridOptions" class="col-md-12"></div>
+    <div class="row itemGridStyle">                
+        <div ng-grid="itemGridOptions"></div>
             
     </div>
 </div>

@@ -1,25 +1,63 @@
 ﻿
 <div class="modal-header">
-    <h3 class="modal-title">{{modalAction}}</h3>
+    <h3 class="modal-title" style="text-align:center;">{{modalAction}}</h3>
 </div>
 <div class="modal-body">
-    Project Name <input type="text" ng-model="projectName" ng-disabled="isItemDisabled" />
-    <br/>
-    Task Name <input type="text" ng-model="taskName" ng-disabled="isItemDisabled" />
-    <br />
-    Assign To <input type="text" ng-model="assignee" ng-disabled="isItemDisabled" />
-    <br/>    
-    Start Date <input id="taskStartDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" ng-disabled="isItemDisabled" />
-    <button ng-click="showStartTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>    
-    <br/>
-    End Date <input id="taskEndDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" ng-disabled="isItemDisabled" />
-    <button ng-click="showEndTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>
-    <br/>
-    Total Hours <input type="text" ng-model="totalHours" ng-disabled="isItemDisabled">
-    <br/>
-    Hours Per Day <input type="text" ng-model="hoursPerDay" ng-disabled="isItemDisabled">
+    <div class="container-fluid">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3 control-label">Project Name</div>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" ng-model="projectName" ng-disabled="isItemDisabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 control-label">Task Name</div>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" ng-model="taskName" ng-disabled="isItemDisabled" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3 control-label">Assign To</div>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" ng-model="assignee" ng-disabled="isItemDisabled" />
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3 control-label">Start Date</div>
+                <div class="col-md-9">
+                    <input class="form-control" id="taskStartDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" ng-disabled="isItemDisabled" />
+                    <button ng-click="showStartTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3 control-label">End Date</div>
+                <div class="col-md-9">
+                    <input class="form-control" id="taskEndDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" ng-disabled="isItemDisabled" />
+                    <button ng-click="showEndTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3 control-label">Total Hours</div>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" ng-model="totalHours" ng-disabled="isItemDisabled">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3 control-label">Hours Per Day</div>
+                <div class="col-md-9">
+                    <input class="form-control" type="text" ng-model="hoursPerDay" ng-disabled="isItemDisabled">
+                </div>
+            </div>            
+        </div>
+    </div>    
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">{{okBtnDisplayName}}</button>
-    <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-success" ng-click="ok()">{{okBtnDisplayName}}</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
 </div>

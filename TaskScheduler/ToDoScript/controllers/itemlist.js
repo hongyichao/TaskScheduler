@@ -23,8 +23,8 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
     
     var toDoEditButtonsTemplate = '<div class="ngCellText"  data-ng-model="row">';
-    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
-    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
+    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button class="btn-warning" data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
+    toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button class="btn-danger" data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
     toDoEditButtonsTemplate = toDoEditButtonsTemplate + '</div>';
 
 
@@ -38,15 +38,16 @@ itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', func
         totalServerItems: 'totalItems',
         pagingOptions: $scope.pagingOptions,
         filterOptions: $scope.filterOptions,
+        rowHeight:35,
         columnDefs: [
-            { displayName: 'Project Name', field: 'ProjectName' },
-            { displayName: 'Task Name', field: 'TaskName' },
-            { displayName: 'Assign To', field: 'By' },
-            { displayName: 'Start Time', field: 'StartTime', cellFilter: "date:'yyyy-MM-dd'" },
-            { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'" },
-            { displayName: 'Total Hours', field: 'TotalHours' },
-            { displayName: 'Hours Per Day', field: 'HoursPerDay' },
-            { cellTemplate: toDoEditButtonsTemplate }            
+            { displayName: 'Project Name', field: 'ProjectName', width: 110 },
+            { displayName: 'Task Name', field: 'TaskName', width:110 },
+            { displayName: 'Assign To', field: 'By', width: 110 },
+            { displayName: 'Start Time', field: 'StartTime', cellFilter: "date:'yyyy-MM-dd'", width: 100 },
+            { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'", width: 100 },
+            { displayName: 'Total Hours', field: 'TotalHours', width:100 },
+            { displayName: 'Hours Per Day', field: 'HoursPerDay', width:110 },
+            { cellTemplate: toDoEditButtonsTemplate, width:150 }            
         ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
