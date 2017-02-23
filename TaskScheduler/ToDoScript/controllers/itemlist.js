@@ -1,6 +1,17 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
-itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', function ($scope, itemReq, $modal, $log) {
+itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', '$timeout',
+function ($scope, itemReq, $modal, $log, $timeout) {
+
+    $scope.setSelectedMenuItem = function () {
+        $timeout(function () {
+            $('#tsnavbar ul li').removeClass('active');
+            $('#taskMenuItem').addClass('active');
+        });
+    };
+
+    $scope.setSelectedMenuItem();
+
     $scope.filters = {projectName:""};
     $scope.$watchCollection('filters', function (newVal, oldVal) {
         if (newVal !== oldVal) {

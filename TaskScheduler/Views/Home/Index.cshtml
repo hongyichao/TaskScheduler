@@ -9,14 +9,14 @@
         @Scripts.Render("~/bundles/bootstrap")
         @Scripts.Render("~/bundles/todo")    
         <script>
-            $(document).ready(function () {
+            $(document).ready(function () {                
                 $('ul.nav li a').on('click',
                 function (e) {
                     $('#tsnavbar ul li').removeClass('active');
                     $(this).parent().addClass('active');
                 });
             });
-            
+
         </script>  
     </head>
     <body ng-app="toDoApp">
@@ -33,8 +33,8 @@
                 </div>
                 <div id="tsnavbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#/">Tasks</a></li>
-                        <li><a href="#/projects">Projects</a></li>
+                        <li id="taskMenuItem"><a href="#/">Tasks</a></li>
+                        <li id="projectMenuItem"><a href="#/projects">Projects</a></li>
                         @*<li>@Html.ActionLink("API Index", "Index", "Help", new { area = "" }, null)</li>*@
                     </ul>
                 </div><!--/.nav-collapse -->

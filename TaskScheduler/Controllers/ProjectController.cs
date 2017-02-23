@@ -29,9 +29,9 @@ namespace ToDoList.Controllers
             {
                 return new ProjectViewModel(){TotalNumber = 0, Projects = new List<Project>()};
             }
-
+            
             var selectedProjects = db.Projects.OrderBy(p => p.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            
             return new ProjectViewModel() { TotalNumber = db.Projects.Count(), Projects = selectedProjects };
 
         }

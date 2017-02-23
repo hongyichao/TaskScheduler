@@ -73,11 +73,35 @@ namespace ToDoList.Repository
 
         public void InsertItem(Item item)
         {
+            string taskProjectName = item.ProjectName;
+
+            var existingProject = db.Projects.FirstOrDefault(p => p.Name == taskProjectName);
+
+            if (existingProject == null) {
+                db.Projects.Add(new Project
+                {
+                    Name = taskProjectName                    
+                });
+            }
+
             db.Items.Add(item);
         }
 
         public void DeleteItem(Item item)
         {
+            var taskProjectName = item.ProjectName;
+
+            var projectTasksCount = db.Items.Count(i => i.ProjectName == taskProjectName);
+
+            if (projectTasksCount == 1) {
+
+                var theProject = db.Projects.FirstOrDefault(p => p.Name == taskProjectName);
+
+                if (theProject != null) {
+                    db.Projects.Remove(theProject);
+                }
+            }
+
             db.Items.Remove(item);
         }
 

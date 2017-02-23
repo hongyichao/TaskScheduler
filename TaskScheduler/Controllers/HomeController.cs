@@ -30,5 +30,9 @@ namespace ToDoList.Controllers
             return PartialView();
         }
 
+        public ActionResult ProjectModal() {
+            return PartialView("ProjectModal");
+        }
+
     }
 }
