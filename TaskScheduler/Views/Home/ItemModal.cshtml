@@ -28,7 +28,7 @@
             <div class="form-group">
                 <div class="col-md-3 control-label">Start Date</div>
                 <div class="col-md-9">
-                    <input class="form-control" id="taskStartDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" ng-disabled="isItemDisabled" />
+                    <input class="form-control" id="taskStartDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isStartTimeCalanderOpened" ng-model="startTime" ng-disabled="true" />
                     <button ng-click="showStartTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="form-group">
                 <div class="col-md-3 control-label">End Date</div>
                 <div class="col-md-9">
-                    <input class="form-control" id="taskEndDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" ng-disabled="isItemDisabled" />
+                    <input class="form-control" id="taskEndDate" type="text" datepicker-popup="yyyy-MM-dd" is-open="isEndTimeCalanderOpened" ng-model="endTime" ng-disabled="true" />
                     <button ng-click="showEndTimeCalander($event)" ng-disabled="isItemDisabled"><i class="glyphicon glyphicon-calendar"></i></button>                    
                 </div>
             </div>
