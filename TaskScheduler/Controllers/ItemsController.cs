@@ -15,6 +15,7 @@ using ToDoList.Search;
 
 namespace ToDoList.Controllers
 {
+    [Authorize]
     public class ItemsController : ApiController
     {
         //private ApplicationDbContext db = new ApplicationDbContext();
@@ -37,7 +38,7 @@ namespace ToDoList.Controllers
             return itemRepository.GetAllItems();
         }
 
-        [Route("api/items/{pageSize}/{Page}")]
+        //[Route("api/items/{pageSize}/{Page}")]
         public ItemViewModel GetItems(int pageSize, int page) {
 
             return itemRepository.GetPagedItems(pageSize, page);

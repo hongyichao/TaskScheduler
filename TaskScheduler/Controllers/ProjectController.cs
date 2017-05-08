@@ -21,7 +21,7 @@ namespace ToDoList.Controllers
             return db.Projects;
         }
 
-        [Route("api/project/{pageSize}/{page}")]
+        [Route("api/project/{pageSize}/{page}")]        
         public ProjectViewModel GetProject(int pageSize, int page)
         {
             

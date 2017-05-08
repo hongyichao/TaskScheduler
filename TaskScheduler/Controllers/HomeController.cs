@@ -10,8 +10,6 @@ namespace ToDoList.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
             return PartialView();
         }
 

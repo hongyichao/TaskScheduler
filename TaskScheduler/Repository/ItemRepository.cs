@@ -9,7 +9,7 @@ using ToDoList.Search;
 using ToDoList.ViewModels;
 
 namespace ToDoList.Repository
-{
+{    
     public class ItemRepository : IItemRepository, IDisposable
     {
         private ApplicationDbContext db;

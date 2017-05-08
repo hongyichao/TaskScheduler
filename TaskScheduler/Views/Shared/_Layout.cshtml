@@ -1,41 +1,51 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>
+    </title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/ToDoStyle/appCss")
+    
+    
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tsnavbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <span class="navbar-brand">Job Cooper</span>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="tsnavbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li id="taskMenuItem"><a href="#/">Tasks</a></li>
+                    <li id="projectMenuItem"><a href="#/projects">Projects</a></li>
+                    @*<li>@Html.ActionLink("API Index", "Index", "Help", new { area = "" }, null)</li>*@
                 </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
+                @Html.Partial("_LoginPartial")
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+    <br /><br />
+    <div class="container">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angularjs")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/todo")
+    <script>
+            $(document).ready(function () {
+                $('ul.nav li a').on('click',
+                function (e) {
+                    $('#tsnavbar ul li').removeClass('active');
+                    $(this).parent().addClass('active');
+                });
+            });
+
+    </script>
 </body>
 </html>

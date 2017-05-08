@@ -1,7 +1,28 @@
 ﻿var itemList = angular.module('itemListModule', []);
 
-itemList.controller('itemListCtrl', ['$scope', 'itemReq', '$modal', '$log', '$timeout',
-function ($scope, itemReq, $modal, $log, $timeout) {
+itemList.controller('itemListCtrl', ['$scope', 'itemReqService', '$modal', '$log', '$timeout', '$location', 'userInfo', 
+function ($scope, itemReqService, $modal, $log, $timeout, $location, userInfo) {
+    
+    $scope.userName = userInfo.getUserName();
+
+    $scope.redirectToLogin = function () {        
+        $location.path('/login')
+    }
+    if (!sessionStorage.getItem('userName')) {
+        userInfo.setUserName("");
+        $scope.userName = "";
+        $scope.redirectToLogin();
+    }
+    else if (userInfo.getUserName().length == 0) {
+        $scope.redirectToLogin();
+    }
+    else {
+        itemListCtrlAction($scope, itemReqService, $modal, $log, $timeout, $location, userInfo);
+    }
+    
+}]);
+
+function itemListCtrlAction($scope, itemReqService, $modal, $log, $timeout, $location, userInfo) {
 
     $scope.setSelectedMenuItem = function () {
         $timeout(function () {
@@ -12,36 +33,34 @@ function ($scope, itemReq, $modal, $log, $timeout) {
 
     $scope.setSelectedMenuItem();
 
-    $scope.filters = {projectName:""};
-    $scope.$watchCollection('filters', function (newVal, oldVal) {
-        if (newVal !== oldVal) {
-                      
-            if ($scope.pagingOptions.currentPage === 1)
-            {
-                $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-            }
-            else
-            {
-                //change current page to triget the Grid to be repopulated since $scope.pagingOptions is $watched
-                $scope.pagingOptions.currentPage = 1;
-            }
-        }
-    });
     $scope.selectedItems = [{}];
     $scope.myData = [];
     $scope.totalItems = $scope.myData.length;
     $scope.pagingOptions = { pageSizes: [10, 20, 30], pageSize: 10, currentPage: 1 };
     $scope.filterOptions = { filterText: '', useExternalFilter: false };
-    
+    $scope.filters = { projectName: "" };
+
     var toDoEditButtonsTemplate = '<div class="ngCellText"  data-ng-model="row">';
     toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button class="btn-warning" data-ng-click="showItemModal(\'update\',row)">Edit</button> ';
     toDoEditButtonsTemplate = toDoEditButtonsTemplate + '<button class="btn-danger" data-ng-click="showItemModal(\'delete\',row)">Delete</button> ';
     toDoEditButtonsTemplate = toDoEditButtonsTemplate + '</div>';
 
+    $scope.$watchCollection('filters', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+
+            if ($scope.pagingOptions.currentPage === 1) {
+                $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+            }
+            else {
+                //change current page to triget the Grid to be repopulated since $scope.pagingOptions is $watched
+                $scope.pagingOptions.currentPage = 1;
+            }
+        }
+    });
 
     $scope.itemGridOptions = {
         data: 'myData',
-        selectedItems : $scope.selectedItems,
+        selectedItems: $scope.selectedItems,
         enableRowSelection: true,
         multiSelect: false,
         enablePaging: true,
@@ -49,67 +68,76 @@ function ($scope, itemReq, $modal, $log, $timeout) {
         totalServerItems: 'totalItems',
         pagingOptions: $scope.pagingOptions,
         filterOptions: $scope.filterOptions,
-        rowHeight:35,
+        rowHeight: 35,
         columnDefs: [
             { displayName: 'Project Name', field: 'ProjectName', width: 110 },
-            { displayName: 'Task Name', field: 'TaskName', width:110 },
+            { displayName: 'Task Name', field: 'TaskName', width: 110 },
             { displayName: 'Assign To', field: 'By', width: 110 },
             { displayName: 'Start Time', field: 'StartTime', cellFilter: "date:'yyyy-MM-dd'", width: 100 },
             { displayName: 'End Time', field: 'EndTime', cellFilter: "date:'yyyy-MM-dd'", width: 100 },
-            { displayName: 'Total Hours', field: 'TotalHours', width:100 },
-            { displayName: 'Hours Per Day', field: 'HoursPerDay', width:110 },
-            { cellTemplate: toDoEditButtonsTemplate, width:150 }            
+            { displayName: 'Total Hours', field: 'TotalHours', width: 100 },
+            { displayName: 'Hours Per Day', field: 'HoursPerDay', width: 110 },
+            { cellTemplate: toDoEditButtonsTemplate, width: 150 }
         ],
         plugins: [new ngGridFlexibleHeightPlugin()]
     };
 
-    $scope.populateGridData = function(newPageSize, newCurrentPage)
-    {        
-        if ($scope.isFilterSet() === true) {            
-            itemReq.searchItems({
-                projectName: $scope.filters.projectName,
-                pageSize: newPageSize, page: newCurrentPage
-            }).$promise.then(function (itemData) {                
-                $scope.totalItems = itemData.totalItems;
-                $scope.myData = itemData.items;                
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
-            });
-                
+    $scope.populateGridData = function (newPageSize, newCurrentPage) {
+        if ($scope.isFilterSet() === true) {
+            itemReqService.searchItems($scope.filters.projectName, newPageSize, newCurrentPage)
+                .then(
+                    function (response) {
+                        var itemData = response.data;
+                        $scope.totalItems = itemData.totalItems;
+                        $scope.myData = itemData.items;
+                        if (!$scope.$$phase) {
+                            $scope.$apply();
+                        }
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+
         } else {
-            itemReq.getItems({ pageSize: newPageSize, page: newCurrentPage }, function (itemData) {
-                $scope.totalItems = itemData.totalItems;
-                $scope.myData = itemData.items;
-                if (!$scope.$$phase) {
-                    $scope.$apply();
+
+            itemReqService.getItems(newPageSize, newCurrentPage).then(
+                function (response) {
+                    itemData = response.data;
+                    $scope.totalItems = itemData.totalItems;
+                    $scope.myData = itemData.items;
+                    if (!$scope.$$phase) {
+                        $scope.$apply();
+                    }
+                },
+                function (err) {
+                    console.log(err);
                 }
-            });
+            );
         }
     }
 
-    $scope.isFilterSet = function() {
-        for (x in $scope.filters)
-        {
+    $scope.isFilterSet = function () {
+        for (x in $scope.filters) {
             if ($scope.filters[x].length > 0) {
                 return true;
             }
         }
         return false;
     };
-
     $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-
     $scope.$watchCollection('pagingOptions', function (newOption, oldOption) {
-        if(newOption.pageSize!==oldOption.pageSize) {
+        if (newOption.pageSize !== oldOption.pageSize) {
             $scope.pagingOptions.currentPage = 1;
             $scope.populateGridData(newOption.pageSize, $scope.pagingOptions.currentPage);
         }
 
-        if (newOption.currentPage !== oldOption.currentPage) {            
+        if (newOption.currentPage !== oldOption.currentPage) {
             $scope.populateGridData($scope.pagingOptions.pageSize, newOption.currentPage);
         }
     });
+
+
 
     $scope.showItemModal = function (action, row) {
         var itemModalInstance = $modal.open({
@@ -117,9 +145,9 @@ function ($scope, itemReq, $modal, $log, $timeout) {
             controller: "itemModalCtrl",
             resolve: {
                 reqObj: function () {
-                    if(action==="add") {
-                        return {action:"add",itemInstance:{}}
-                    } 
+                    if (action === "add") {
+                        return { action: "add", itemInstance: {} }
+                    }
                     else if (action === "update") {
                         $scope.selectedItem = {};
                         if (row.entity !== "undefined") {
@@ -127,7 +155,7 @@ function ($scope, itemReq, $modal, $log, $timeout) {
                         }
                         return { action: "update", itemInstance: $scope.selectedItem }
                     }
-                    else if (action === "delete"){
+                    else if (action === "delete") {
                         $scope.selectedItem = {};
                         if (row.entity !== "undefined") {
                             $scope.selectedItem = row.entity;
@@ -140,30 +168,41 @@ function ($scope, itemReq, $modal, $log, $timeout) {
 
         if (action === "add") {
             itemModalInstance.result.then(function (anItem) {
-                itemReq.addItem(anItem).$promise.then(function () {                    
-                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-                });
+                itemReqService.addItem(anItem).then(
+                    function () {
+                        $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+                    }
+                );
                 //$log.info(anItem.ProjectName + " | " + anItem.TaskName +" added");
             });
         }
-        
-        if(action==="update") {
+
+        if (action === "update") {
             itemModalInstance.result.then(function (updatedItem) {
-                itemReq.updateItem({ Id: updatedItem.Id }, updatedItem).$promise.then(function () {
-                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-                });
+                itemReqService.updateItem(updatedItem.Id, updatedItem).then(
+                    function () {
+                        $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+                    }
+                );
             });
         }
 
         if (action === "delete") {
             itemModalInstance.result.then(function (deletedItem) {
-                itemReq.deleteItem({ Id: deletedItem.Id }).$promise.then(function () {
-                    $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-                });
+                itemReqService.deleteItem(deletedItem.Id).then(
+                    function () {
+                        $scope.populateGridData($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
             });
         }
     }
-}]);
+
+}
+
 
 itemList.controller('itemModalCtrl', ['$scope', '$modalInstance','reqObj', function ($scope, $modalInstance, reqObj) {
     $scope.isItemDisabled = false; 
