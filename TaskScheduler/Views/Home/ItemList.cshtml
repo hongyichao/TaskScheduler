@@ -1,5 +1,5 @@
 ﻿<input type="hidden" id="activePage" value="taskList" />
-<div class="row">
+<div ng-if="userName.length >0" class="row">
     <div class="row">        
         <div class="col-md-12">
             <div>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <br />
-    <div ng-if="userName.length >0" class="row itemGridStyle">                
+    <div class="row itemGridStyle">                
         <div ng-grid="itemGridOptions"></div>
             
     </div>
